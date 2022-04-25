@@ -1,0 +1,21 @@
+{
+    "port": 3000,
+   "type" : "postgresql",
+    "db": {
+    "client": "postgresql",
+    "connection": {
+
+      "host": "localhost",
+      "port": 5432,
+      "user": "postgres",
+      "password": "massichiara07",
+      "database": "remoteQC"
+     }
+    },
+     "routes": [{
+      "method": "get",
+      "endpoint": "/results",
+      "query": "SELECT * FROM dailyQC"
+    }
+  ]
+}
