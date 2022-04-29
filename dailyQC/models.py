@@ -28,4 +28,8 @@ class DailyQC(models.Model):
 
     mAs = models.DecimalField(max_digits=7, decimal_places=3, blank=False, null=False, default=0)
 
+    EI = models.DecimalField(max_digits=7, decimal_places=3, blank=False, null=False, default=0)
+    EIt = models.DecimalField(max_digits=7, decimal_places=3, blank=False, null=False, default=0)
+    DI = models.DecimalField(max_digits=7, decimal_places=3, blank=False, null=False, default=0)
+
     baseline = models.BooleanField(blank=True,null=False, default=False)
