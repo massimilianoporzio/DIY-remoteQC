@@ -27,7 +27,9 @@ const chartData = reactive({
   labels: [],
   datasets: [{
     label: 'MTF\u2085\u2080',
-    borderColor: '#0A77D7',
+    borderColor: 'black',
+    borderWidth: 1.5,
+
     data: []
   }]
 
@@ -72,7 +74,8 @@ const chartOptions = reactive({
           yMin: 0.5,
           yMax: 0.5,
           borderColor: '#099D0D',
-          borderWidth: 2,
+          borderWidth: 1,
+          borderDash: [5,5],
           label: {
           enabled: true,
             backgroundColor: 'rgba(0,0,0,0)',
@@ -82,6 +85,44 @@ const chartOptions = reactive({
             yAdjust: -10
 
         }
+
+        },
+        line2: {
+          type: 'line',
+          yMin: 0.5,
+          yMax: 0.5,
+          borderColor: '#DB2808',
+          borderWidth: 0.9,
+          label: {
+            font:{
+              size: 12
+            },
+          enabled: true,
+            backgroundColor: 'rgba(0,0,0,0)',
+            color: 'black',
+            content: 'lower',
+            position: 'end',
+            yAdjust: -10
+
+        }
+
+        },
+        line3: {
+          type: 'line',
+          yMin: 0.5,
+          yMax: 0.5,
+          borderColor: '#0A77D7',
+          borderWidth: 0.9,
+          label: {
+          enabled: true,
+            backgroundColor: 'rgba(0,0,0,0)',
+            color: 'black',
+            content: 'upper',
+            position: 'end',
+            yAdjust: -10
+
+        }
+
         }
       }
     }
@@ -99,7 +140,7 @@ onMounted(()=>{
   // const xLabels = props['apiData'].map(entry => dateformat(entry.date,'mediumDate'))
   const xLabels = props['apiData'].map(entry =>  entry.date)
   console.log("xLabels: ",xLabels)
-  const MTF50data =  props['apiData'].map(entry => entry.MTF50)
+  const MTF50data =  props['apiData'].map(entry => Number(entry.MTF50))
   console.log("MTFdata: ",MTF50data)
   chartData.labels = xLabels
   chartData.datasets[0].data = MTF50data
@@ -109,14 +150,27 @@ onMounted(()=>{
        })
   // console.log(baselines)
   // console.log(sortedBaselines)
-  const baselineMTF50 = sortedBaselines[0].MTF50
+  const baselineMTF50 = Number(sortedBaselines[0].MTF50)
   console.log('baseline for MTF50: ',baselineMTF50)
   chartOptions.plugins.annotation.annotations.line1.yMin = baselineMTF50
   chartOptions.plugins.annotation.annotations.line1.yMax = baselineMTF50
-  const suggestedMax = baselineMTF50*1.25
-  const suggestedMin = baselineMTF50*0.75
+  const yMax  =Math.max(...MTF50data)
+  const yMin  =Math.min(...MTF50data)
+  const upper = baselineMTF50*1.2
+  const lower = baselineMTF50*0.8
+
+  const suggestedMax = yMax > upper ? yMax+0.1 : upper
+  const suggestedMin = yMin < lower ? yMin-0.1 : lower
+
+  chartOptions.plugins.annotation.annotations.line2.yMin = lower
+  chartOptions.plugins.annotation.annotations.line2.yMax = lower
+
+  chartOptions.plugins.annotation.annotations.line3.yMin = upper
+  chartOptions.plugins.annotation.annotations.line3.yMax = upper
+
   chartOptions.scales.y.suggestedMin = suggestedMin
   chartOptions.scales.y.suggestedMax = suggestedMax
+
 
 
 })
