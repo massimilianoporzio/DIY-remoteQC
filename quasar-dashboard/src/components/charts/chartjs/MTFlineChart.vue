@@ -2,8 +2,7 @@
 <div>
     <q-card>
       <q-card-section>
-       CIAO
-        <Line :chart-data="chartData" :chartOptions="chartOptions" height="200"></Line>
+        <Line chart-id="mtf50" :chart-data="chartData" :chartOptions="chartOptions" height="200"></Line>
       </q-card-section>
 
     </q-card>
@@ -28,6 +27,7 @@ const chartData = reactive({
   labels: [],
   datasets: [{
     label: 'MTF\u2085\u2080',
+    borderColor: '#0A77D7',
     data: []
   }]
 
@@ -36,7 +36,11 @@ const chartData = reactive({
 const chartOptions = reactive({
   scales: { y: {
                 suggestedMin: 0,
-                suggestedMax: 1.0
+                suggestedMax: 1.0,
+                  title:{
+                    display: true,
+                    text: 'MTF\u2085\u2080'
+                  }
               },
             x: {
                 type: 'timeseries',
@@ -50,6 +54,16 @@ const chartOptions = reactive({
             }
         },
   plugins: {
+    title: {
+        display: true,
+        text: 'MTF\u2085\u2080',
+        font: {
+          size:24
+        }
+      },
+    legend:{
+      display: false
+    },
     autocolors: false,
     annotation: {
       annotations: {
@@ -89,6 +103,22 @@ onMounted(()=>{
   console.log("MTFdata: ",MTF50data)
   chartData.labels = xLabels
   chartData.datasets[0].data = MTF50data
+  const baselines= props['apiData'].filter(entry=>entry.baseline===true)
+  const sortedBaselines = baselines.sort((a,b)=>{
+         return new Date(b.date) - new Date(a.date)
+       })
+  // console.log(baselines)
+  // console.log(sortedBaselines)
+  const baselineMTF50 = sortedBaselines[0].MTF50
+  console.log('baseline for MTF50: ',baselineMTF50)
+  chartOptions.plugins.annotation.annotations.line1.yMin = baselineMTF50
+  chartOptions.plugins.annotation.annotations.line1.yMax = baselineMTF50
+  const suggestedMax = baselineMTF50*1.25
+  const suggestedMin = baselineMTF50*0.75
+  chartOptions.scales.y.suggestedMin = suggestedMin
+  chartOptions.scales.y.suggestedMax = suggestedMax
+
+
 })
 </script>
 

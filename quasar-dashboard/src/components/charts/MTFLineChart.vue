@@ -197,8 +197,11 @@ export default {
       const xLabels = this.$props.chartsData.map(entry => dateformat(entry.date,'mediumDate'))
        this.options.xAxis[0].data=xLabels
        const MTF50data =  this.$props.chartsData.map(entry => entry.MTF50)
-       const baseline= this.$props.chartsData.filter(entry=>entry.baseline===true)
-       const baselineMTF50 = baseline[0].MTF50
+       const baselines= this.$props.chartsData.filter(entry=>entry.baseline===true)
+       const sortedBaselines = baselines.sort((a,b)=>{
+         return new Date(b.date) - new Date(a.date)
+       })
+       const baselineMTF50 = sortedBaselines[0].MTF50
        const maxValue = Math.max( ...MTF50data );
        const minValue = Math.min( ...MTF50data );
         this.options.yAxis[0].max = maxValue+0.3;
