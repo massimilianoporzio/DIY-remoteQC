@@ -28,13 +28,13 @@
       </div>
 
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <h2>EI chart</h2>
+        <EIlineChart v-if="loaded" :api-data="chartsData"/>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <h2>DI chart</h2>
+        <DIlineChart v-if="loaded" :api-data="chartsData"/>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <h2>mAs chart</h2>
+        <MAslineChart v-if="loaded" :api-data="chartsData"/>
       </div>
 
     </div>
@@ -52,10 +52,16 @@ import D4lineChart from "components/charts/chartjs/detect/D4lineChart";
 import PVlineChart from "components/charts/chartjs/signal/PVlineChart";
 import SNRlineChart from "components/charts/chartjs/signal/SNRlineChart";
 import SDNRlineChart from "components/charts/chartjs/signal/SDNRlineChart";
+import EIlineChart from "components/charts/chartjs/exposure/EIlineChart";
+import DIlineChart from "components/charts/chartjs/exposure/DIlineChart";
+import MAslineChart from "components/charts/chartjs/exposure/MAslineChart";
 
 export default defineComponent({
   name: "Charts",
   components: {
+    MAslineChart,
+    DIlineChart,
+    EIlineChart,
     SDNRlineChart,
     SNRlineChart,
     PVlineChart,
