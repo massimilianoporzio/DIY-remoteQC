@@ -2,10 +2,10 @@
   <q-page class="q-pa-sm">
     <div class="row q-col-gutter-sm q-py-sm">
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <h2>d' 0.3 mm charts</h2>
+        <D03lineChart v-if="loaded" :api-data="chartsData"></D03lineChart>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <h2>d' 4 mm charts</h2>
+        <D4lineChart v-if="loaded" :api-data="chartsData"></D4lineChart>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 
@@ -44,16 +44,20 @@
 <script>
 import {defineComponent, defineAsyncComponent} from 'vue'
 import axios from "axios";
-import MTF10lineChart from "components/charts/chartjs/MTF10lineChart";
-import MTF50lineChart from "components/charts/chartjs/MTF50lineChart";
-import MTF20lineChart from "components/charts/chartjs/MTF20lineChart";
+import MTF10lineChart from "components/charts/chartjs/MTF/MTF10lineChart";
+import MTF50lineChart from "components/charts/chartjs/MTF/MTF50lineChart";
+import MTF20lineChart from "components/charts/chartjs/MTF/MTF20lineChart";
+import D03lineChart from "components/charts/chartjs/detect/D03lineChart"
+import D4lineChart from "components/charts/chartjs/detect/D4lineChart";
 
 export default defineComponent({
   name: "Charts",
   components: {
+    D4lineChart,
     MTF10lineChart,
     MTF20lineChart,
     MTF50lineChart,
+    D03lineChart,
 
     PieChart: defineAsyncComponent(() => import('components/charts/PieChart')),
     ScatterPlot: defineAsyncComponent(() => import('components/charts/ScatterPlot')),
