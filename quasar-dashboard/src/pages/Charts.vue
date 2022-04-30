@@ -2,29 +2,29 @@
   <q-page class="q-pa-sm">
     <div class="row q-col-gutter-sm q-py-sm">
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <D03lineChart v-if="loaded" :api-data="chartsData"></D03lineChart>
+        <D03lineChart v-if="loaded" :api-data="chartsData"/>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <D4lineChart v-if="loaded" :api-data="chartsData"></D4lineChart>
+        <D4lineChart v-if="loaded" :api-data="chartsData"/>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 
-        <MTF50lineChart v-if="loaded" :api-data="chartsData"></MTF50lineChart>
+        <MTF50lineChart v-if="loaded" :api-data="chartsData"/>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <MTF20lineChart v-if="loaded" :api-data="chartsData"></MTF20lineChart>
+        <MTF20lineChart v-if="loaded" :api-data="chartsData"/>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <MTF10lineChart v-if="loaded" :api-data="chartsData"></MTF10lineChart>
+        <MTF10lineChart v-if="loaded" :api-data="chartsData"/>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <h2>Signal (PV chart)</h2>
+        <PVlineChart v-if="loaded" :api-data="chartsData"/>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <h2>SNR chart</h2>
+        <SNRlineChart v-if="loaded" :api-data="chartsData"/>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <h2>SDNR chart</h2>
+        <SDNRlineChart v-if="loaded" :api-data="chartsData"/>
       </div>
 
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -49,10 +49,16 @@ import MTF50lineChart from "components/charts/chartjs/MTF/MTF50lineChart";
 import MTF20lineChart from "components/charts/chartjs/MTF/MTF20lineChart";
 import D03lineChart from "components/charts/chartjs/detect/D03lineChart"
 import D4lineChart from "components/charts/chartjs/detect/D4lineChart";
+import PVlineChart from "components/charts/chartjs/signal/PVlineChart";
+import SNRlineChart from "components/charts/chartjs/signal/SNRlineChart";
+import SDNRlineChart from "components/charts/chartjs/signal/SDNRlineChart";
 
 export default defineComponent({
   name: "Charts",
   components: {
+    SDNRlineChart,
+    SNRlineChart,
+    PVlineChart,
     D4lineChart,
     MTF10lineChart,
     MTF20lineChart,
