@@ -71,6 +71,7 @@ const chartOptions = reactive({
     annotation: {
       annotations: {
         line1: {
+          display: false,
           type: 'line',
           yMin: 0.5,
           yMax: 0.5,
@@ -78,7 +79,7 @@ const chartOptions = reactive({
           borderWidth: 1,
           borderDash: [5,5],
           label: {
-          enabled: true,
+          enabled: false,
             backgroundColor: 'rgba(0,0,0,0)',
             color: 'black',
             content: 'baseline',
@@ -89,6 +90,7 @@ const chartOptions = reactive({
 
         },
         line2: {
+          display: false,
           type: 'line',
           yMin: 0.5,
           yMax: 0.5,
@@ -98,7 +100,7 @@ const chartOptions = reactive({
             font:{
               size: 12
             },
-          enabled: true,
+          enabled: false,
             backgroundColor: 'rgba(0,0,0,0)',
             color: 'black',
             content: 'lower',
@@ -109,13 +111,14 @@ const chartOptions = reactive({
 
         },
         line3: {
+          display: false,
           type: 'line',
           yMin: 0.5,
           yMax: 0.5,
           borderColor: '#0A77D7',
           borderWidth: 0.9,
           label: {
-          enabled: true,
+          enabled: false,
             backgroundColor: 'rgba(0,0,0,0)',
             color: 'black',
             content: 'upper',
@@ -145,21 +148,25 @@ onMounted(()=>{
   chartData.labels = xLabels
   chartData.datasets[0].data = d03Data
   const baselines= props['apiData'].filter(entry=>entry.baseline===true)
-  const sortedBaselines = baselines.sort((a,b)=>{
+  console.log("BASELINES FOR D03: ",baselines)
+    const sortedBaselines = baselines.sort((a,b)=>{
          return new Date(b.date) - new Date(a.date)
        })
-  // console.log(baselines)
-  // console.log(sortedBaselines)
-  const baselineD03 = Number(sortedBaselines[0].D03)
 
-  chartOptions.plugins.annotation.annotations.line1.yMin = baselineD03
+ const baselineD03 = baselines.length ?  Number(sortedBaselines[0].D03) : 0
+ chartOptions.plugins.annotation.annotations.line1.yMin = baselineD03
   chartOptions.plugins.annotation.annotations.line1.yMax = baselineD03
   const yMax  =Math.max(...d03Data)
   const yMin  =Math.min(...d03Data)
-  const upper = baselineD03*1.2
-  const lower = baselineD03*0.8
+
+
+
+  const upper = baselines ? baselineD03*1.2 : 0
+
+  const lower = baselines ? baselineD03*0.8 : 0
 
   const suggestedMax = yMax > upper ? yMax+0.1 : upper
+
   const suggestedMin = yMin < lower ? yMin-0.1 : lower
 
   chartOptions.plugins.annotation.annotations.line2.yMin = lower
@@ -168,9 +175,18 @@ onMounted(()=>{
   chartOptions.plugins.annotation.annotations.line3.yMin = upper
   chartOptions.plugins.annotation.annotations.line3.yMax = upper
 
-  chartOptions.scales.y.suggestedMin = suggestedMin - 2
-  chartOptions.scales.y.suggestedMax = suggestedMax + 2
+  chartOptions.scales.y.suggestedMin = suggestedMin - 0.1*suggestedMin
+  chartOptions.scales.y.suggestedMax = suggestedMax + 0.1*suggestedMax
 
+  if(baselines.length){
+    chartOptions.plugins.annotation.annotations.line1.display = true
+    chartOptions.plugins.annotation.annotations.line2.display = true
+    chartOptions.plugins.annotation.annotations.line3.display = true
+
+    chartOptions.plugins.annotation.annotations.line1.label.enabled = true
+    chartOptions.plugins.annotation.annotations.line2.label.enabled = true
+    chartOptions.plugins.annotation.annotations.line3.label.enabled = true
+  }
 
 
 })

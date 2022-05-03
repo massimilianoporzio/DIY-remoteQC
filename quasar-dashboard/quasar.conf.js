@@ -12,6 +12,7 @@ module.exports = configure(function (/* ctx */) {
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
     supportTS: false,
+    productName: 'PROVA',
 
     // https://quasar.dev/quasar-cli/prefetch-feature
     // preFetch: true,
@@ -111,8 +112,8 @@ module.exports = configure(function (/* ctx */) {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: `Quasar App`,
-        short_name: `Quasar App`,
+        name: `Remote QC Dashboard`,
+        short_name: `Remote QC Dashboard`,
         description: `A Quasar Framework app`,
         display: 'standalone',
         orientation: 'portrait',

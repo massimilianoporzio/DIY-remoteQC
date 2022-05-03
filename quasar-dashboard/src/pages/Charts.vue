@@ -5,36 +5,36 @@
         <D03lineChart v-if="loaded" :api-data="chartsData"/>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <D4lineChart v-if="loaded" :api-data="chartsData"/>
+<!--        <D4lineChart v-if="loaded" :api-data="chartsData"/>-->
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 
-        <MTF50lineChart v-if="loaded" :api-data="chartsData"/>
+<!--        <MTF50lineChart v-if="loaded" :api-data="chartsData"/>-->
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <MTF20lineChart v-if="loaded" :api-data="chartsData"/>
+<!--        <MTF20lineChart v-if="loaded" :api-data="chartsData"/>-->
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <MTF10lineChart v-if="loaded" :api-data="chartsData"/>
+<!--        <MTF10lineChart v-if="loaded" :api-data="chartsData"/>-->
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <PVlineChart v-if="loaded" :api-data="chartsData"/>
+<!--        <PVlineChart v-if="loaded" :api-data="chartsData"/>-->
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <SNRlineChart v-if="loaded" :api-data="chartsData"/>
+<!--        <SNRlineChart v-if="loaded" :api-data="chartsData"/>-->
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <SDNRlineChart v-if="loaded" :api-data="chartsData"/>
+<!--        <SDNRlineChart v-if="loaded" :api-data="chartsData"/>-->
       </div>
 
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <EIlineChart v-if="loaded" :api-data="chartsData"/>
+<!--        <EIlineChart v-if="loaded" :api-data="chartsData"/>-->
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <DIlineChart v-if="loaded" :api-data="chartsData"/>
+<!--        <DIlineChart v-if="loaded" :api-data="chartsData"/>-->
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <MAslineChart v-if="loaded" :api-data="chartsData"/>
+<!--        <MAslineChart v-if="loaded" :api-data="chartsData"/>-->
       </div>
 
     </div>

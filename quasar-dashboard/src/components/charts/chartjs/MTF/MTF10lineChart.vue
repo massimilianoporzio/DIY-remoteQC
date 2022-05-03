@@ -82,7 +82,10 @@ const chartOptions = reactive({
             color: 'black',
             content: 'baseline',
             position: 'end',
-            yAdjust: -10
+            yAdjust: -10,
+            font:{
+              size: 10
+            },
 
         }
 
@@ -95,7 +98,7 @@ const chartOptions = reactive({
           borderWidth: 0.9,
           label: {
             font:{
-              size: 12
+              size: 10
             },
           enabled: true,
             backgroundColor: 'rgba(0,0,0,0)',
@@ -119,7 +122,10 @@ const chartOptions = reactive({
             color: 'black',
             content: 'upper',
             position: 'end',
-            yAdjust: -10
+            yAdjust: -10,
+            font:{
+              size: 10
+            },
 
         }
 
