@@ -5,11 +5,11 @@
         <Line chart-id="d03" :chart-data="chartData" :chartOptions="chartOptions" height="200"></Line>
         <div class="row">
           <div class="q-px-sm">
-            <q-input clearable hint="Start date" filled v-model="startdate" mask="date" >
+            <q-input clearable hint="Start date" filled v-model="startdate" mask="date" @clear="filterData" >
               <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
                   <q-popup-proxy ref="qDateProxy" cover transition-show="scale" transition-hide="scale">
-                    <q-date v-model="startdate" default-year-month="2017/12">
+                    <q-date v-model="startdate" default-year-month="2017/12" @update:model-value="filterData">
                       <div class="row items-center justify-end">
                         <q-btn v-close-popup label="Close" color="primary" flat />
                       </div>
@@ -20,7 +20,19 @@
             </q-input>
            </div>
         <div>
-          <q-input v-model="enddate" filled type="date" hint="Stop date" @change="filterData" />
+         <q-input clearable hint="Start date" filled v-model="enddate" mask="date" @clear="filterData" >
+              <template v-slot:append>
+                <q-icon name="event" class="cursor-pointer">
+                  <q-popup-proxy ref="qDateProxy" cover transition-show="scale" transition-hide="scale">
+                    <q-date v-model="enddate" default-year-month="2017/12" @update:model-value="filterData">
+                      <div class="row items-center justify-end">
+                        <q-btn v-close-popup label="Close" color="primary" flat />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
         </div>
         </div>
 
@@ -39,7 +51,7 @@ import 'chartjs-adapter-date-fns';
 import { parseJSON } from 'date-fns'
 import {Line} from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, PointElement, BarElement, LineElement, CategoryScale, LinearScale, TimeScale, TimeSeriesScale} from 'chart.js'
-import {onMounted, reactive, ref} from "vue";
+import {computed, onMounted, reactive, ref} from "vue";
 import dateformat from "dateformat";
 
 ChartJS.register(annotationPlugin,
@@ -48,8 +60,36 @@ ChartJS.register(annotationPlugin,
 const startdate = ref('')
 const enddate = ref('')
 
+let maxDate = 0
+let minDate = 0
+
+
+
 const filterData = ()=>{
   console.log("FILTERING DATA")
+  const start1 = new Date(startdate.value)
+  const start2 = start1.setHours(0,0,0,0)
+  const start =  start2 ? Math.max(start2,minDate) : minDate
+  console.log("START IS: ",start)
+  const end1 = new Date(enddate.value)
+  const end2 = end1.setHours(0,0,0,0)
+  const end = end2? Math.min(maxDate,end2) : maxDate
+  console.log("END IS: ",end)
+  const convertedDates = chartData.labels.map(date=>new Date(date).setHours(0,0,0,0))
+console.log('convertedDates: ',convertedDates)
+  const filterDates = convertedDates.filter(d=> d>=start && d <=end)
+  console.log('filteredates: ',filterDates)
+  chartData.labels = filterDates
+  //working on data points
+  const startArray = convertedDates.indexOf(filterDates[0])
+  const endArray = convertedDates.indexOf(filterDates[filterDates.length-1])
+  //using slice would modify the original unfiltered data so I'll copy
+  const copydatapoints = [...chartData.datasets[0].data]
+  //remove the end values so order is modified
+  copydatapoints.splice(endArray+1,filterDates.length)
+  copydatapoints.splice(0, startArray)
+  chartData.datasets[0].data = copydatapoints
+
 }
 
 const chartData = reactive({
@@ -76,7 +116,7 @@ const chartOptions = reactive({
                   }
               },
             x: {
-                type: 'timeseries',
+                type: 'time',
                 time: {
                     unit: 'day',
                     displayFormats: {
@@ -174,6 +214,7 @@ onMounted(()=>{
   console.log("dataset data: ",props.apiData)
   // const xLabels = props['apiData'].map(entry => dateformat(entry.date,'mediumDate'))
   const xLabels = props['apiData'].map(entry =>  entry.date)
+
   console.log("xLabels: ",xLabels)
   const d03Data =  props['apiData'].map(entry => Number(entry.D03))
   chartData.labels = xLabels
@@ -218,6 +259,13 @@ onMounted(()=>{
     chartOptions.plugins.annotation.annotations.line2.label.enabled = true
     chartOptions.plugins.annotation.annotations.line3.label.enabled = true
   }
+
+  //SET MIN AND MAX DATE
+  const convertedDates = chartData.labels.map(date=>new Date(date).setHours(0,0,0,0))
+  console.log('convertedDates: ',convertedDates)
+  minDate =  Math.min(...convertedDates)
+  maxDate =  Math.max(...convertedDates)
+
 
 
 })
