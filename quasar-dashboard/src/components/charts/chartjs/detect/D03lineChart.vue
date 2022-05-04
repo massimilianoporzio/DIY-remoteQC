@@ -3,6 +3,28 @@
     <q-card>
       <q-card-section>
         <Line chart-id="d03" :chart-data="chartData" :chartOptions="chartOptions" height="200"></Line>
+        <div class="row">
+          <div class="q-px-sm">
+            <q-input clearable hint="Start date" filled v-model="startdate" mask="date" >
+              <template v-slot:append>
+                <q-icon name="event" class="cursor-pointer">
+                  <q-popup-proxy ref="qDateProxy" cover transition-show="scale" transition-hide="scale">
+                    <q-date v-model="startdate" default-year-month="2017/12">
+                      <div class="row items-center justify-end">
+                        <q-btn v-close-popup label="Close" color="primary" flat />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+           </div>
+        <div>
+          <q-input v-model="enddate" filled type="date" hint="Stop date" @change="filterData" />
+        </div>
+        </div>
+
+
       </q-card-section>
 
     </q-card>
@@ -23,6 +45,13 @@ import dateformat from "dateformat";
 ChartJS.register(annotationPlugin,
   Title, Tooltip, LineElement, Legend,BarElement, PointElement, CategoryScale, LinearScale, CategoryScale, TimeScale, TimeSeriesScale)
 
+const startdate = ref('')
+const enddate = ref('')
+
+const filterData = ()=>{
+  console.log("FILTERING DATA")
+}
+
 const chartData = reactive({
   labels: [],
   datasets: [{
@@ -34,6 +63,8 @@ const chartData = reactive({
   }]
 
 })
+
+
 
 const chartOptions = reactive({
   scales: { y: {
