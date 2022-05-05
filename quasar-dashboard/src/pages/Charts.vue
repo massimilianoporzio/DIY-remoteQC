@@ -2,7 +2,9 @@
   <q-page class="q-pa-sm">
     <div class="row q-col-gutter-sm q-py-sm">
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <D03lineChart v-if="loaded" :api-data="chartsData"/>
+<!--        <D03lineChart v-if="loaded" :api-data="chartsData"/>-->
+            <D03_highchart v-if="loaded" :api-data="chartsData" />
+            <div v-else>No charts data</div>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 <!--        <D4lineChart v-if="loaded" :api-data="chartsData"/>-->
@@ -55,6 +57,7 @@ import SDNRlineChart from "components/charts/chartjs/signal/SDNRlineChart";
 import EIlineChart from "components/charts/chartjs/exposure/EIlineChart";
 import DIlineChart from "components/charts/chartjs/exposure/DIlineChart";
 import MAslineChart from "components/charts/chartjs/exposure/MAslineChart";
+import D03_highchart from "components/charts/highcharts/D03_highchart"
 
 export default defineComponent({
   name: "Charts",
@@ -70,6 +73,7 @@ export default defineComponent({
     MTF20lineChart,
     MTF50lineChart,
     D03lineChart,
+    D03_highchart,
 
     PieChart: defineAsyncComponent(() => import('components/charts/PieChart')),
     ScatterPlot: defineAsyncComponent(() => import('components/charts/ScatterPlot')),
