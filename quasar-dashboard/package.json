@@ -20,6 +20,7 @@
     "highcharts": "^10.1.0",
     "highcharts-vue": "^1.4.0",
     "quasar": "^2.0.0",
+    "stylus-loader": "^6.2.0",
     "vue": "^3.2.33",
     "vue-chartjs": "^4.0.7",
     "vue-i18n": "^9.0.0-beta.0",

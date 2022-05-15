@@ -1,10 +1,11 @@
 <template>
   <q-page class="q-pa-sm">
-    <div class="row q-col-gutter-sm q-py-sm">
-      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+    <div v-if="loaded">
+      <div class="row q-col-gutter-sm q-py-sm" v-if="!emptyData">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" >
 <!--        <D03lineChart v-if="loaded" :api-data="chartsData"/>-->
             <D03_highchart v-if="loaded" :api-data="chartsData" />
-            <div v-else>No charts data</div>
+
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 <!--        <D4lineChart v-if="loaded" :api-data="chartsData"/>-->
@@ -40,6 +41,21 @@
       </div>
 
     </div>
+      <div v-else>
+        <div class="col-12 text-blue" >
+          NO DATA FROM API SERVICE
+          <NoData/>
+        </div>
+
+
+      </div>
+    </div>
+    <div v-else>
+      NO API SERVICE AVAILABLE
+    </div>
+
+
+
   </q-page>
 </template>
 
@@ -58,6 +74,7 @@ import EIlineChart from "components/charts/chartjs/exposure/EIlineChart";
 import DIlineChart from "components/charts/chartjs/exposure/DIlineChart";
 import MAslineChart from "components/charts/chartjs/exposure/MAslineChart";
 import D03_highchart from "components/charts/highcharts/D03_highchart"
+import NoData from "components/NoData"
 
 export default defineComponent({
   name: "Charts",
@@ -74,6 +91,7 @@ export default defineComponent({
     MTF50lineChart,
     D03lineChart,
     D03_highchart,
+    NoData,
 
     PieChart: defineAsyncComponent(() => import('components/charts/PieChart')),
     ScatterPlot: defineAsyncComponent(() => import('components/charts/ScatterPlot')),
@@ -85,6 +103,7 @@ export default defineComponent({
   },
   data() {
     return {
+      emptyData: false,
       loaded: false,
         chartsData: []
 
@@ -110,8 +129,14 @@ export default defineComponent({
 
           // this.rawData = response.data.rows
           this.loaded = true
+          if(!response.data.length){
+            this.emptyData = true
+            console.log("SORRY NO DATA FROM THE API")
+          }
           console.log("LOADED - chartsData are in parent: ",this.chartsData)
-        })
+        }).catch(()=>{
+          this.loaded = false
+      })
     },
   },
   async mounted() {
