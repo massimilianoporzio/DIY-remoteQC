@@ -17,13 +17,25 @@ const chartData = reactive({
 
 
 const chartOptions = reactive({
+  rangeSelector:{
+   // inputDateFormat: " %b %Y"
+  },
+  tooltip:{
+     xDateFormat: '%A, %b %e, %Y',
+
+  },
   title: {
-    text: 'd\' 0.3 mm'
+    text: 'd\' 0.3 mm',
+    style: {
+      fontSize: 24,
+      fontFamily: 'Georgia'
+    }
   },
   series: [
     {
       name: 'd03',
-      data: chartData.data
+      data: chartData.data,
+
 
     },
   ],
@@ -31,6 +43,7 @@ const chartOptions = reactive({
     title: {
       // text: 'd\''
     },
+    opposite: false,
     min: 0,
     max: 10,
     plotLines:[
@@ -41,14 +54,35 @@ const chartOptions = reactive({
       width: 2,
       label: {
               text: 'baseline',
-              align: 'right',
+              align: 'left',
               // style: {
               //      color: "white"
               //     }
              }
+      },
+      {
+        value: 1,
+        color: '#DB2808',
+        dashStyle: 'shortdash',
+        width: 2,
+        label: {
+                text: 'lower',
+               }
+      },
+       {
+        value: 1,
+        color: '#0A77D7',
+        dashStyle: 'shortdash',
+        width: 2,
+        label: {
+                text: 'upper'
+               }
       }
     ]
-  }
+
+  },
+
+
 })
 
 const props = defineProps( {
@@ -60,7 +94,7 @@ onMounted(()=>{
 
   console.log("MOUNTED HIGHCHARTS D03")
   console.log("dataset data: ",props.apiData)
-  const data = props['apiData'].map(entry => [new Date(entry.date).setHours(1,0,0,0,),Number(entry.D03)])
+  const data = props['apiData'].map(entry => [new Date(entry.date).setHours(1,0,0,0,),entry.D03? Number(entry.D03):null])
   console.log("date: ",data)
   chartData.data = data
   chartOptions.series[0].data=chartData.data
@@ -75,20 +109,24 @@ onMounted(()=>{
   const d03Data =  props['apiData'].map(entry => Number(entry.D03))
 
   const yMax  =Math.max(...d03Data)
+  console.log(yMax)
   const yMin  =Math.min(...d03Data)
 
   const upper = baselines ? baselineD03*1.2 : 0
 
   const lower = baselines ? baselineD03*0.8 : 0
 
-  const suggestedMax = yMax > upper ? yMax+0.1 : upper
+  const suggestedMax = yMax > upper ? yMax : upper + 1
 
-  const suggestedMin = yMin < lower ? yMin-0.1 : lower
+  const suggestedMin = yMin < lower ? yMin : lower - 2
 
   chartOptions.yAxis.min = suggestedMin
   chartOptions.yAxis.max = suggestedMax
 
   chartOptions.yAxis.plotLines[0].value = baselineD03
+
+  chartOptions.yAxis.plotLines[1].value = lower
+  chartOptions.yAxis.plotLines[2].value = upper
 })
 
 </script>

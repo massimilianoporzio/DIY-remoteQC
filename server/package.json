@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.0",
+    "node-windows": "^1.0.0-beta.7",
     "pg": "^8.7.3",
     "resquel": "^1.0.0"
   }
