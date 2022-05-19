@@ -8,4 +8,6 @@ const client = new Client({
     database: "remoteQC"
 })
 
+
+
 module.exports = client
