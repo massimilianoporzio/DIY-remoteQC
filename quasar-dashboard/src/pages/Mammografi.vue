@@ -89,10 +89,17 @@ const data = [
         .then(response => {
           console.log("USED AXIOS ",response.data)
           const dati = response.data.map(entry=>{
+            const dataUltimoCQ =  new Date(entry.data_ultimo_cq)
+            const dataOggi = new Date()
+            const diff = dataOggi.getTime() - dataUltimoCQ.getTime()
+            const giorni_da_ultimo_cq = diff / (1000 * 3600 * 24)
+
             return {
               title: entry.marca + ' '+entry.modello,
               caption: entry.nome_ospedale + '<br>' + entry.nome_sala,
-              img: 'http://10.69.24.203/media/' + entry.photo
+              img: 'http://10.69.24.203/media/' + entry.photo,
+              // chip: 'gg dall\'ultimo cq: '+ Math.round(giorni_da_ultimo_cq)
+              chip: 'data ultimo cq: '+ dataUltimoCQ.toLocaleDateString()
             }})
           console.log('DATI: ',dati)
           mammoData.value = dati
