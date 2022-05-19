@@ -2,14 +2,14 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-<!--        <q-btn-->
-<!--          flat-->
-<!--          dense-->
-<!--          round-->
-<!--          @click="toggleLeftDrawer"-->
-<!--          icon="menu"-->
-<!--          aria-label="Menu"-->
-<!--        />-->
+        <q-btn
+          flat
+          dense
+          round
+          @click="toggleLeftDrawer"
+          icon="menu"
+          aria-label="Menu"
+        />
         <q-toolbar-title>
           Remote QC dashboard
         </q-toolbar-title>
@@ -44,32 +44,39 @@
       </q-toolbar>
     </q-header>
 
-<!--    <q-drawer-->
-<!--      v-model="leftDrawerOpen"-->
-<!--      show-if-above-->
-<!--      bordered-->
-<!--      class="bg-primary text-white"-->
-<!--    >-->
-<!--      <q-list>-->
-
-<!--        <q-item to="/Charts" active-class="q-item-no-link-highlighting">-->
-<!--          <q-item-section avatar>-->
-<!--            <q-icon name="insert_chart"/>-->
-<!--          </q-item-section>-->
-<!--          <q-item-section>-->
-<!--            <q-item-label>Dashboard</q-item-label>-->
-<!--          </q-item-section>-->
-<!--        </q-item>-->
-
-
-
-<!--      </q-list>-->
-<!--    </q-drawer>-->
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      bordered
+      class="bg-primary text-white"
+    >
+      <q-list>
+        <q-item to="/" active-class="q-item-no-link-highlighting">
+          <q-item-section avatar>
+            <q-icon name="dashboard"/>
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Mammografi</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item to="/Charts" active-class="q-item-no-link-highlighting">
+          <q-item-section avatar>
+            <q-icon name="insert_chart"/>
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>DIY ECMP 2022</q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </q-drawer>
 
     <q-footer elevated>
         <q-toolbar>
           <q-toolbar-title>Remote QC</q-toolbar-title>
-          <a class="text-white" target="_blank" href="https://icons8.com/icon/952/raggi-x">Raggi X </a>&nbsp;  icon by &nbsp;  <a class="text-white" target="_blank" href="https://icons8.com">Icons8</a>
+
+            <a class="text-white transparent q-pa-none" target="_blank" href="https://icons8.com/icon/952/raggi-x">Raggi X </a> &nbsp;icon by &nbsp;  <a class="text-white transparent q-pa-none" target="_blank" href="https://icons8.com">Icons8</a>
+
+
 <!--          <a class="text-white" href="https://www.flaticon.com/free-icons/radiology" title="radiology icons">Radiology icons created by Freepik - Flaticon</a>-->
         </q-toolbar>
       </q-footer>

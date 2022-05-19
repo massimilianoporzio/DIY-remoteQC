@@ -53,7 +53,16 @@ const getEsitiCQ_MammoByImpianto = (request,response)=>{
 }
 
 const getMammografi = (request,response)=>{
-    const query = 'SELECT * FROM public.impianti_impianto WHERE tipologia=\'MAMMOGRAFO\' AND data_fine IS NULL'
+    const query = 'SELECT imp.marca, imp.modello,imp.photo, ospedale.name as nome_ospedale ,sala.name as nome_sala, MAX(cq.data) as data_ultimo_cq\n' +
+        '\tFROM public.impianti_impiantosala impSala, public.ospedali_ospedale ospedale ,public.ospedali_sala sala,\n' +
+        '\tpublic.impianti_impianto imp,  public.controlli_controllo cq\n' +
+        '\tWHERE imp.tipologia = \'MAMMOGRAFO\' AND data_fine_insala IS  NULL\n' +
+        '\t AND impSala.impianto_id = imp.id\n' +
+        '\t AND ospedale.id=impSala.ospedale_id\n' +
+        '\t AND sala.id = impSala.sala_id \n' +
+        '\t AND cq.impianto_id = impSala.impianto_id\n' +
+        '\t AND imp.data_fine IS NULL\n' +
+        '\t GROUP BY imp.marca, imp.modello,imp.photo, ospedale.name, sala.name'
     poolDjango.query(query,(error,results)=>{
         if(error){
             throw error

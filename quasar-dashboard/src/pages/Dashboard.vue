@@ -1,22 +1,22 @@
 <template>
   <q-page class="q-pa-sm">
 
-    <card-social icon_position="left"/>
+<!--    <card-social icon_position="left"/>-->
 
-    <card-charts/>
+<!--    <card-charts/>-->
 
-    <div class="row q-col-gutter-sm  q-py-sm">
-      <tab-social/>
-      <card-with-image/>
-    </div>
+<!--    <div class="row q-col-gutter-sm  q-py-sm">-->
+<!--      <tab-social/>-->
+<!--      <card-with-image/>-->
+<!--    </div>-->
 
-    <div class="row q-col-gutter-sm  q-pb-sm">
-      <todo-list/>
+<!--    <div class="row q-col-gutter-sm  q-pb-sm">-->
+<!--      <todo-list/>-->
 
-      <card-time-line/>
-    </div>
+<!--      <card-time-line/>-->
+<!--    </div>-->
 
-    <table-visits/>
+<!--    <table-visits/>-->
   </q-page>
 </template>
 
