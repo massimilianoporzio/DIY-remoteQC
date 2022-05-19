@@ -14,7 +14,7 @@
       </div>
       <div class="row justify-end ">
         <span class="text-h6 float-right">
-          <q-btn label="Vedi CQ" rounded color="secondary" outline></q-btn>
+          <q-btn label="Vedi CQ settimanali" rounded color="secondary" outline></q-btn>
         </span>
       </div>
     </q-card-section>
