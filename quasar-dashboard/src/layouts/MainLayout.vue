@@ -73,8 +73,9 @@
     <q-footer elevated>
         <q-toolbar>
           <q-toolbar-title>Remote QC</q-toolbar-title>
-
-            <a class="text-white transparent q-pa-none" target="_blank" href="https://icons8.com/icon/952/raggi-x">Raggi X </a> &nbsp;icon by &nbsp;  <a class="text-white transparent q-pa-none" target="_blank" href="https://icons8.com">Icons8</a>
+          <p class="text-caption q-pt-md">
+            <a class="text-white transparent q-pa-none" target="_blank" href="https://icons8.com/icon/952/raggi-x">Raggi X </a> &nbsp;favicon by &nbsp;  <a class="text-white transparent q-pa-none" target="_blank" href="https://icons8.com">Icons8</a>
+          </p>
 
 
 <!--          <a class="text-white" href="https://www.flaticon.com/free-icons/radiology" title="radiology icons">Radiology icons created by Freepik - Flaticon</a>-->
