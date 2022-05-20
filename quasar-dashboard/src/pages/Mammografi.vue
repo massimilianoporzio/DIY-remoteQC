@@ -4,7 +4,7 @@
     <div>
       <q-card class="no-border no-shadow bg-transparent">
         <q-card-section class="q-pa-sm">
-          <q-input rounded v-model="search" outlined placeholder="Search Product">
+          <q-input rounded v-model="search" outlined placeholder="Search Mammohraphy Unit">
             <template v-slot:append>
               <q-icon v-if="search === ''" name="search"/>
               <q-icon v-else name="clear" class="cursor-pointer" @click="search = ''"/>
@@ -14,7 +14,7 @@
       </q-card>
     </div>
     <div class="row q-col-gutter-sm">
-      <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 flex" v-for="item, item_index in mammoData">
+      <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 flex" v-for="item, item_index in searchedMammo">
         <card-product :data="item"></card-product>
       </div>
     </div>
@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import {defineComponent, defineAsyncComponent, onMounted} from 'vue';
+import {defineComponent, computed, defineAsyncComponent, onMounted} from 'vue';
 import {ref} from 'vue';
 import {colors} from 'quasar'
 import axios from "axios";
@@ -30,6 +30,15 @@ const search = ref('');
 const {changeAlpha} = colors
 const mammoData = ref([])
 const emptyData = ref(false)
+
+const searchedMammo = computed(()=>{
+  return mammoData.value.filter((mammo)=>{
+    return(mammo.title
+      .toLowerCase()
+      .indexOf(search.value.toLowerCase())!=-1);
+  })
+})
+
 const data = [
   {
     title: 'Our Changing Planet',
