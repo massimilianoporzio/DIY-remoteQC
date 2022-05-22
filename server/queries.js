@@ -9,7 +9,7 @@ const pool = new Pool({
 })
 
 const poolDjango = new Pool({
-    host: "10.69.24.203",
+    host: "127.0.0.1",
     user: "postgres",
     port: 5432,
     password: "massichiara07",
@@ -53,7 +53,7 @@ const getEsitiCQ_MammoByImpianto = (request,response)=>{
 }
 
 const getMammografi = (request,response)=>{
-    const query = 'SELECT imp.marca, imp.modello,imp.photo, ospedale.name as nome_ospedale ,sala.name as nome_sala, MAX(cq.data) as data_ultimo_cq\n' +
+    const query = 'SELECT imp.id, imp.marca, imp.modello,imp.photo, ospedale.name as nome_ospedale ,sala.name as nome_sala, MAX(cq.data) as data_ultimo_cq\n' +
         '\tFROM public.impianti_impiantosala impSala, public.ospedali_ospedale ospedale ,public.ospedali_sala sala,\n' +
         '\tpublic.impianti_impianto imp,  public.controlli_controllo cq\n' +
         '\tWHERE imp.tipologia = \'MAMMOGRAFO\' AND data_fine_insala IS  NULL\n' +
@@ -62,7 +62,7 @@ const getMammografi = (request,response)=>{
         '\t AND sala.id = impSala.sala_id \n' +
         '\t AND cq.impianto_id = impSala.impianto_id\n' +
         '\t AND imp.data_fine IS NULL\n' +
-        '\t GROUP BY imp.marca, imp.modello,imp.photo, ospedale.name, sala.name'
+        '\t GROUP BY imp.id,imp.marca, imp.modello,imp.photo, ospedale.name, sala.name'
     poolDjango.query(query,(error,results)=>{
         if(error){
             throw error
