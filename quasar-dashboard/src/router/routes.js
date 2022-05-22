@@ -24,6 +24,7 @@ const routes = [
 
       // Not completed yet
       // {path: '/Taskboard', component: () => import('pages/TaskBoard.vue')},
+      {path: '/mammoqc/:impianto_id', name: 'mammoqc',component: ()=>import('pages/mammo/QCDetail')}
     ]
   },
 
