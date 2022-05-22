@@ -14,7 +14,7 @@
       </div>
       <div class="row justify-end ">
         <span class="text-h6 float-right">
-          <q-btn label="Vedi CQ settimanali" rounded color="secondary" outline></q-btn>
+          <q-btn label="Vedi CQ settimanali" rounded color="secondary" outline @click="gotoDetail"></q-btn>
         </span>
       </div>
     </q-card-section>
@@ -24,14 +24,18 @@
   </q-card>
 </template>
 
-<script>
-import {defineComponent} from 'vue'
 
-export default defineComponent({
-  name: "CardProduct",
+<script setup>
+import {ref} from 'vue'
+import {useRouter} from "vue-router";
+const router = useRouter()
+const props = defineProps(['data'])
 
-  props: ['data']
-})
+  const gotoDetail = ()=>{
+    console.log("GOTO DETAIL OF MAMMO with ID: ",props.data.id)
+    router.push({name: 'mammoqc',params: {impianto_id: props.data.id}})
+  }
+
 </script>
 
 <style scoped>
