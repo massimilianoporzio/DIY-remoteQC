@@ -33,3 +33,6 @@ class DailyQC(models.Model):
     DI = models.DecimalField(max_digits=7, decimal_places=3, blank=False, null=True, default=0)
 
     baseline = models.BooleanField(blank=True,null=False, default=False)
+
+    signal_image = models.BinaryField(null=True)
+
