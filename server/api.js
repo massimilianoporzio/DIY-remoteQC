@@ -32,7 +32,8 @@ client.connect();
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.get('/results', (req, res)=>{
-    client.query(`SELECT * FROM public."dailyQC_dailyqc" ORDER BY date ASC;`, (err, result)=>{
+    client.query(`SELECT id, date, "datetimeJava", "SIGNAL", "SNR", "SDNR", "MTF50", "MTF20", "MTF10", "D03", "D4", "mAs",
+baseline, "DI", "EI", "EIt", encode(signal_image, 'base64') as signal_image FROM public."dailyQC_dailyqc" ORDER BY date ASC;`, (err, result)=>{
         if(!err){
             res.send(result.rows);
         }

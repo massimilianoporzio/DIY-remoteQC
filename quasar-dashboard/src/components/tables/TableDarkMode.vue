@@ -8,7 +8,7 @@
     </q-card-section>
     <q-separator color="white"/>
     <q-card-section class="q-pa-none">
-      <q-table dark class="table-bg" :rows="data" :columns="columns" hide-bottom>
+      <q-table dark class="table-bg" :rows="tableData" :columns="columns" hide-bottom>
         <template v-slot:body-cell-Name="props">
           <q-td :props="props">
             <q-item style="max-width: 420px">
@@ -41,11 +41,12 @@
   </q-card>
 </template>
 
-<script>
-import {defineComponent} from 'vue'
 
+<script setup>
+  import {reactive} from "vue";
+  import {onMounted} from "vue";
 
-const data = [
+  const data = [
   {
     name: 'Pratik Patel',
     Crated_Date: '15/3/2020',
@@ -87,7 +88,7 @@ const data = [
     des: 'Solutions Developer'
   },
 ];
-const columns = [
+  const columns = [
   {name: 'Name', label: 'Name', field: 'name', sortable: true, align: 'left'},
   {name: 'Crated Date', label: 'Crated Date', field: 'Crated_Date', sortable: true, align: 'left'},
   {name: 'Project', label: 'Project', field: 'Project', sortable: true, align: 'left'},
@@ -95,25 +96,57 @@ const columns = [
   {name: 'Action', label: '', field: 'Action', sortable: false, align: 'center'}
 ];
 
-export default defineComponent({
-  name: "TableDarkMode",
-  setup() {
+  const props = defineProps( {
+    apiData: [],
 
-    return {
-      data,
-      columns,
+  })
+  // const tableData = reactive({
+  //
+  // })
+  const tableData = reactive([])
+  function _arrayBufferToBase64( buffer ) {
+    var binary = '';
+    var bytes =  buffer;
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode( bytes[ i ] );
+    }
+    return window.btoa( binary );
+}
+  onMounted(()=>{
+    console.log("from API data are: ",props.apiData)
+    const apiData =props['apiData'].filter(entry=>entry.signal_image!=null)
+    console.log("APIDATA FILTRATI",apiData)
+    apiData.forEach((entry)=>{
+      let newObject = {}
 
-      getColor(val) {
-        if (val > 70 && val <= 100) {
+
+
+      newObject['avatar']='data:image/jpeg;base64,'+entry.signal_image
+
+      newObject['name']= 'Massi'
+      newObject['Crated_Date'] = '10/1/2020',
+      newObject['Project'] = 'Quasar QGrid',
+      newObject['progress'] = 30
+      newObject['des'] = 'Solutions Developer'
+      tableData.push(newObject)
+    }
+
+
+    )
+
+    console.log("DATI CREATI PER LA TABELLA: ",tableData)
+    console.log("dati originali: ",data)
+  })
+  const getColor = (val)=>{
+     if (val > 70 && val <= 100) {
           return 'green'
         } else if (val > 50 && val <= 70) {
           return 'blue'
         }
         return 'red'
-      }
-    }
-  },
-})
+  }
+
 </script>
 
 <style>
