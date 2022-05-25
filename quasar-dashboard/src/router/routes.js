@@ -16,7 +16,7 @@ const routes = [
       {path: '/Checkout', component: () => import('pages/Checkout.vue')},
       {path: '/Ecommerce', component: () => import('pages/Mammografi.vue')},
       {path: '/Pagination', component: () => import('pages/Pagination.vue')},
-      {path: '/Charts', component: () => import('pages/Charts.vue')},
+      {path: '/Charts', component: () => import('pages/Charts2.vue')},
       {path: '/Calendar', component: () => import('pages/Calendar.vue')},
       {path: '/Directory', component: () => import('pages/Directory.vue')},
       {path: '/Footer', component: () => import('pages/Footer.vue')},
@@ -24,6 +24,7 @@ const routes = [
 
       // Not completed yet
       // {path: '/Taskboard', component: () => import('pages/TaskBoard.vue')},
+      {path: '/mammoqc/:impianto_id', name: 'mammoqc',component: ()=>import('pages/mammo/QCDetail')}
     ]
   },
 
