@@ -23,7 +23,7 @@ export default defineComponent({
   components: {
     TableProgress: defineAsyncComponent(() => import('components/tables/TableProgress')),
     TableCustomGrid: defineAsyncComponent(() => import('components/tables/TableCustomGrid')),
-    TableDarkMode: defineAsyncComponent(() => import('components/tables/TableDarkMode')),
+    TableDarkMode: defineAsyncComponent(() => import('components/tables/TableDarkModeQCremote')),
     TableActions: defineAsyncComponent(() => import('components/tables/TableActions')),
     TablesBasic: defineAsyncComponent(() => import('components/tables/TableBasic'))
   },
