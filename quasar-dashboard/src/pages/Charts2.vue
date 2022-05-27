@@ -7,14 +7,14 @@
         align="left"
         class="bg-primary text-white shadow-2"
         :breakpoint="0">
-          <q-tab name="overview">Overview</q-tab>
+          <q-tab name="overview" >Overview</q-tab>
           <q-tab name="charts">Charts</q-tab>
         </q-tabs>
       <div class="bg-amber col" >
 
            <q-tab-panels v-model="tab" class="bg-primary full-height"  >
-          <q-tab-panel name="overview" class="text-white bg-primary" >
-              Tabella
+          <q-tab-panel name="overview" >
+              <table-dark-mode @rowSelected="showRowDetail"/>
           </q-tab-panel>
 
           <q-tab-panel name="charts" class="text-white">
@@ -29,13 +29,21 @@
       </div>
 
 
-<!--      <div class="col" >-->
-<!--        1 of 2 eeee-->
-<!--      </div>-->
+      <div class="col bg-primary q-mt-sm text-white" v-if="tab==='overview'"
+      style="max-height: 250px" >
+        <div v-if="selectedRow" class="q-pt-sm q-pl-sm">
+          {{selectedRow}}
+        </div>
+        <div v-else class="q-pt-sm q-pl-sm">
+          No row selected
+        </div>
+      </div>
     </div>
   </q-page>
 
 </template>
+
+
 
 <script>
 import {defineComponent, defineAsyncComponent} from 'vue'
@@ -50,11 +58,26 @@ export default defineComponent({
     BarChart: defineAsyncComponent(() => import('components/charts/BarChart')),
     AreaChart: defineAsyncComponent(() => import('components/charts/AreaChart')),
     GuageChart: defineAsyncComponent(() => import('components/charts/GuageChart')),
-    D03: defineAsyncComponent(()=>import('components/charts/highcharts/D03_highchart'))
+    D03: defineAsyncComponent(()=>import('components/charts/highcharts/D03_highchart')),
+    TableDarkMode: defineAsyncComponent(() => import('components/tables/TableDarkModeQCremote')),
+  },
+  setup() {
+
+     const selectedRow = ref(null)
+    function showRowDetail(row) {
+       console.log("RICEVUTO! ",row)
+       selectedRow.value = row
+       console.log('selectedRow: ',selectedRow.value)
+     }
+     return {
+       showRowDetail,
+       selectedRow
+     }
   },
   data() {
     return {
       tab: ref('overview'),
+
       emptyData: false,
       loaded: false,
         chartsData: []
@@ -62,6 +85,7 @@ export default defineComponent({
       }
   },
    methods:{
+
      requestData () {
       axios.get('http://localhost:3000/results')
         .then(response => {
