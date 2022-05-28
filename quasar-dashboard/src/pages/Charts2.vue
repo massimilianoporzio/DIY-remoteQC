@@ -7,8 +7,8 @@
         align="left"
         class="bg-primary text-white shadow-2"
         :breakpoint="0">
-          <q-tab name="overview" >Overview</q-tab>
-          <q-tab name="charts">Charts</q-tab>
+          <q-tab name="overview" class="text-capitalize" >Overview</q-tab>
+          <q-tab name="charts" class="text-capitalize">Charts</q-tab>
         </q-tabs>
       <div class="bg-amber col" >
 
@@ -29,15 +29,15 @@
       </div>
 
 
-      <div class="col bg-primary q-mt-sm text-white" v-if="tab==='overview'"
-      style="max-height: 250px" >
-        <div v-if="selectedRow" class="q-pt-sm q-pl-sm">
-          {{selectedRow}}
-        </div>
-        <div v-else class="q-pt-sm q-pl-sm">
-          No row selected
-        </div>
-      </div>
+<!--      <div class="col bg-primary q-mt-sm text-white" v-if="tab==='overview'"-->
+<!--      style="max-height: 250px" >-->
+<!--        <div v-if="selectedRow" class="q-pt-sm q-pl-sm">-->
+<!--          {{selectedRow}}-->
+<!--        </div>-->
+<!--        <div v-else class="q-pt-sm q-pl-sm">-->
+<!--          No row selected-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
   </q-page>
 
