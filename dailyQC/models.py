@@ -26,8 +26,9 @@ class DailyQC(models.Model):
     MTF50 = models.DecimalField(max_digits=5, decimal_places=3, blank=False, null=True, default=0)
     deltaMTF50 = models.DecimalField(max_digits=7, decimal_places=2, blank=False, null=True, default=0)
     MTF20 = models.DecimalField(max_digits=5, decimal_places=3, blank=False, null=True, default=0)
+    deltaMTF20 = models.DecimalField(max_digits=7, decimal_places=2, blank=False, null=True, default=0)
     MTF10 = models.DecimalField(max_digits=5, decimal_places=3, blank=False, null=True, default=0)
-
+    deltaMTF10 = models.DecimalField(max_digits=7, decimal_places=2, blank=False, null=True, default=0)
     #d'
     D03 = models.DecimalField(max_digits=6, decimal_places=3, blank=False, null=True, default=0)
     deltaD03 = models.DecimalField(max_digits=7, decimal_places=2, blank=False, null=True, default=0)

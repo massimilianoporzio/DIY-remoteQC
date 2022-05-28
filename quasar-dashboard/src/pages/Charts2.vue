@@ -14,7 +14,7 @@
 
            <q-tab-panels v-model="tab" class="bg-primary full-height"  >
           <q-tab-panel name="overview" >
-              <table-dark-mode @rowSelected="showRowDetail"/>
+              <table-dark-mode :api-data="dbData"/>
           </q-tab-panel>
 
           <q-tab-panel name="charts" class="text-white">
@@ -61,26 +61,14 @@ export default defineComponent({
     D03: defineAsyncComponent(()=>import('components/charts/highcharts/D03_highchart')),
     TableDarkMode: defineAsyncComponent(() => import('components/tables/TableDarkModeQCremote')),
   },
-  setup() {
 
-     const selectedRow = ref(null)
-    function showRowDetail(row) {
-       console.log("RICEVUTO! ",row)
-       selectedRow.value = row
-       console.log('selectedRow: ',selectedRow.value)
-     }
-     return {
-       showRowDetail,
-       selectedRow
-     }
-  },
   data() {
     return {
       tab: ref('overview'),
 
       emptyData: false,
       loaded: false,
-        chartsData: []
+      dbData: []
 
       }
   },
@@ -90,14 +78,14 @@ export default defineComponent({
       axios.get('http://localhost:3000/results')
         .then(response => {
           console.log("USED AXIOS ",response.data)
-          this.chartsData = response.data
+          this.dbData = response.data
 
           this.loaded = true
           if(!response.data.length){
             this.emptyData = true
             console.log("SORRY NO DATA FROM THE API")
           }
-          console.log("LOADED - chartsData are in parent: ",this.chartsData)
+          console.log("LOADED - dbData are in parent: ",this.dbData)
         }).catch(()=>{
           this.loaded = false
       })
