@@ -14,7 +14,7 @@
 
            <q-tab-panels v-model="tab" class="bg-primary full-height"  >
           <q-tab-panel name="overview" >
-              <table-dark-mode :api-data="dbData"/>
+              <table-dark-mode :api-data="dbData" v-if="loaded"/>
           </q-tab-panel>
 
           <q-tab-panel name="charts" class="text-white">
