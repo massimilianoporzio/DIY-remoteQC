@@ -20,7 +20,7 @@ class DailyQC(models.Model):
     deltaSNR = models.DecimalField(max_digits=7, decimal_places=2, blank=False, null=True, default=0)
     SDNR = models.DecimalField(max_digits=7, decimal_places=2, blank=False, null=True, default=0)
     deltaSDNR = models.DecimalField(max_digits=7, decimal_places=2, blank=False, null=True, default=0)
-    CONTRAST = models.DecimalField(max_digits=7, decimal_places=4, blank=False, null=True, default=0)
+    CONTRAST = models.DecimalField(max_digits=9, decimal_places=6, blank=False, null=True, default=0)
     deltaCONTRAST = models.DecimalField(max_digits=7, decimal_places=2, blank=False, null=True, default=0)
 
     MTF50 = models.DecimalField(max_digits=5, decimal_places=3, blank=False, null=True, default=0)
