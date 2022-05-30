@@ -1,3 +1,4 @@
 /.env
 .idea/*
 /server/node_modules/
+/server/daemon/*
