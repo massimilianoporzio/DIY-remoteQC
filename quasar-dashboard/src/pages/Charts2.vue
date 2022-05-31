@@ -8,6 +8,7 @@
         class="bg-primary text-white shadow-2"
         :breakpoint="0">
           <q-tab name="overview" class="text-capitalize" >Overview</q-tab>
+          <q-tab name="values" class="text-capitalize">Values</q-tab>
           <q-tab name="charts" class="text-capitalize">Charts</q-tab>
         </q-tabs>
       <div class="bg-amber col" >
@@ -16,7 +17,10 @@
           <q-tab-panel name="overview" >
               <table-dark-mode :api-data="dbData" v-if="loaded"/>
           </q-tab-panel>
-
+          <q-tab-panel name="values" class="text-white">
+            <div class="text-h6">Values</div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </q-tab-panel>
           <q-tab-panel name="charts" class="text-white">
             <div class="text-h6">Alarms</div>
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
