@@ -6,32 +6,94 @@
 <!--        <q-btn label="Export" color="blue" class="float-right text-capitalize  shadow-3" icon="person"/>-->
 <!--      </div>-->
 <!--    </q-card-section>-->
-    <q-separator color="white" class="q-mt-sm"/>
+<!--    <q-separator color="white" class="q-mt-sm"/>-->
     <q-card-section class="q-pa-none" id="cardTable">
-      <q-table  virtual-scroll
-       dark :rows="apiData" row-key="id" title="Remote QC"  :rows-per-page-options="[5,10,15]"
+      <q-table virtual-scroll title="QC Results"
+       dark :rows="apiData" row-key="id"   :rows-per-page-options="[5,10,15]"
                :pagination="{'rowsPerPage':10}"
       :visible-columns="['date','datetimeJava','kVp','mAs' ,'esito','esitoSIGNAL' ,'esitoSNR','esitoSDNR','esitoMTF50',
                           'esitoD03','esitoD4',
                           'SDNR','SNR','SIGNAL','MTF50','MTF20','MTF10']"
       :columns="columns">
          <template v-slot:body="props">
-        <q-tr :props="props">
+        <q-tr  :props="props">
           <q-td auto-width>
-            <q-toggle v-model="props.expand" checked-icon="add" unchecked-icon="remove" />
+            <q-btn dense flat icon="add" @click="props.expand = !props.expand">
+
+            </q-btn>
+
           </q-td>
 
           <!-- METTERE TUTTE LE DEFINIZIONI DI COLONNA QUI -->
+          <q-td auto-width key="date" :props="props">
+            {{format(parseJSON(props.row.date),'dd/MM/yyyy')}}
+          </q-td>
+          <q-td auto-width key="datetimeJava" :props="props">
+            {{format(parseJSON(props.row.datetimeJava) ,'dd/MM/yyyy hh:mm:ss')}}
+          </q-td>
+           <q-td auto-width key="kVp" :props="props">
+             {{props.row.kV}}
+           </q-td>
+          <q-td auto-width key="mAs" :props="props">
+             {{props.row.mAs}}
+           </q-td>
+          <q-td auto-width key="esito" :props="props" style="border-right: 1px solid rgb(92,92,92)">
+            <q-icon name="lightbulb" :style="{color: getColorFromEsito(getOverallEsito(props.row))}" size="2em"></q-icon>
+          </q-td>
+          <q-td auto-width key="esitoSDNR" :props="props" style="">
+            <q-icon name="lightbulb" :style="{color: getColorFromEsito(getEsito(props.row.esitoSDNR))}" size="1.5em"></q-icon>
+          </q-td>
+           <q-td auto-width key="esitoSNR" :props="props" style="">
+            <q-icon name="lightbulb" :style="{color: getColorFromEsito(getEsito(props.row.esitoSNR))}" size="1.5em"></q-icon>
+          </q-td>
+           <q-td auto-width key="esitoSIGNAL" :props="props" style="border-right: 1px solid rgb(92,92,92)">
+            <q-icon name="lightbulb" :style="{color: getColorFromEsito(getEsito(props.row.esitoSIGNAL))}" size="1.5em"></q-icon>
+          </q-td>
+          <q-td auto-width key="esitoMTF50" :props="props" style="border-right: 1px solid rgb(92,92,92)">
+            <q-icon name="lightbulb" :style="{color: getColorFromEsito(getEsito(props.row.esitoMTF50))}" size="1.5em"></q-icon>
+          </q-td>
+          <q-td auto-width key="esitoD03" :props="props" style="">
+            <q-icon name="lightbulb" :style="{color: getColorFromEsito(getEsito(props.row.esitoD03))}" size="1.5em"></q-icon>
+          </q-td>
+          <q-td auto-width key="esitoD4" :props="props" style="">
+            <q-icon name="lightbulb" :style="{color: getColorFromEsito(getEsito(props.row.esitoD4))}" size="1.5em"></q-icon>
+          </q-td>
         </q-tr>
         <q-tr v-show="props.expand" :props="props">
-          <q-td colspan="100%">
-            <div class="text-left">This is expand slot for row above: {{ props.row.id }}.</div>
+          <q-td auto-width colspan="2">
+            <div class="text-left"><q-img :src="getImageSrcFromRow(props.row)"></q-img></div>
           </q-td>
+          <q-td auto-width colspan="1">
+            <div class="text-left">
+              <div class="text-subtitle2">Exposure params</div>
+              EI={{props.row.EI}}<br>
+              DI={{props.row.DI}}<br>
+              EI<sub>t</sub>={{props.row.EIt}}<br>
+              DAP={{props.row.DAP}} µGy cm² <br>
+
+            </div>
+          </q-td>
+          <q-td auto-width colspan="1">
+            <div class="text-subtitle2">MTF values</div>
+            MTF<sub>50</sub>= {{props.row.MTF50}}<br>
+            MTF<sub>20</sub>= {{props.row.MTF20}}<br>
+            MTF<sub>10</sub>= {{props.row.MTF10}}
+          </q-td>
+          <q-td auto-width colspan="1">
+            <div class="text-subtitle2">Contrast and Signal values</div>
+            Signal (Al target)={{props.row.SIGNAL}}<br>
+            Contast: {{props.row.CONTRAST}} %<br>
+            SNR: {{props.row.SNR}}<br>
+            SDNR: {{props.row.SDNR}}
+
+          </q-td>
+
         </q-tr>
       </template>
 
        <template v-slot:header="props">
          <q-tr>
+           <q-th colspan="1" rowspan="2"></q-th>
            <q-th colspan="1" rowspan="2">Date</q-th>
            <q-th colspan="1" rowspan="2">Analysis<br>datetime</q-th>
            <q-th colspan="1" rowspan="2">kVp</q-th>
@@ -50,28 +112,7 @@
 
          </q-tr>
        </template>
-        <template v-slot:body-cell-esito="props">
-          <q-td :props="props" style="border-right: 1px solid rgb(92,92,92)">
-            <q-icon name="lightbulb" :style="{color: getColorFromEsito(props.value)}" size="2em"></q-icon>
-             <q-separator vertical style="width: 1px; color:red" />
-          </q-td>
 
-        </template>
-        <template v-slot:body-cell-esitoSDNR="props">
-          <q-td :props="props" style="">
-            <q-icon name="lightbulb" :style="{color: getColorFromEsito(props.value)}" size="1.5em"></q-icon>
-          </q-td>
-        </template>
-        <template v-slot:body-cell-esitoSNR="props">
-          <q-td :props="props" style="">
-            <q-icon name="lightbulb" :style="{color: getColorFromEsito(props.value)}" size="1.5em"></q-icon>
-          </q-td>
-        </template>
-        <template v-slot:body-cell-esitoSIGNAL="props">
-          <q-td :props="props" style="border-right: 1px solid rgb(92,92,92)">
-            <q-icon name="lightbulb" :style="{color: getColorFromEsito(props.value)}" size="1.5em"></q-icon>
-          </q-td>
-        </template>
         <template v-slot:body-cell-esitoMTF50="props">
           <q-td :props="props" style="border-right: 1px solid rgb(92,92,92)">
             <q-icon name="lightbulb" :style="{color: getColorFromEsito(props.value)}" size="1.5em"></q-icon>
@@ -106,6 +147,9 @@ const props = defineProps( {
   })
 const tabledata = ref([])
 
+const getImageSrcFromRow = (row)=>{
+  return 'data:image/jpeg;base64,'+row.signal_image
+}
 const columns = [{
         name: 'date',
         align: 'center',
@@ -185,6 +229,7 @@ const getEsito = (esito) => {
 }
 
 const getColorFromEsito = (esito)=>{
+
   return esito === 'OK' ? '#21BA45' : esito === 'KO' ? '#C10015' : '#F2C037'
 }
 
