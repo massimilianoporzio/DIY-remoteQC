@@ -59,7 +59,7 @@
             <q-icon name="lightbulb" :style="{color: getColorFromEsito(getEsito(props.row.esitoD4))}" size="1.5em"></q-icon>
           </q-td>
         </q-tr>
-        <q-tr v-show="props.expand" :props="props">
+        <q-tr v-show="props.expand" :props="props" style="border-bottom: 1px solid rgb(92,92,92)">
           <q-td auto-width colspan="2">
             <div class="text-left"><q-img :src="getImageSrcFromRow(props.row)"></q-img></div>
           </q-td>
@@ -79,13 +79,60 @@
             MTF<sub>20</sub>= {{props.row.MTF20}}<br>
             MTF<sub>10</sub>= {{props.row.MTF10}}
           </q-td>
-          <q-td auto-width colspan="1">
+          <q-td auto-width colspan="2" style="border-right: 1px solid rgb(92,92,92)">
             <div class="text-subtitle2">Contrast and Signal values</div>
             Signal (Al target)={{props.row.SIGNAL}}<br>
             Contast: {{props.row.CONTRAST}} %<br>
             SNR: {{props.row.SNR}}<br>
             SDNR: {{props.row.SDNR}}
 
+          </q-td>
+          <q-td auto-width colspan="4">
+            <div class="text-subtitle2 text-center">Variations from baseline<br>&Delta; (%)</div>
+            <div class="row q-pt-md">
+              <div class="col text-left">
+                &Delta;SDNR= {{props.row.deltaSDNR}}<br>
+                &Delta;SNR= {{props.row.deltaSNR}}<br>
+                &Delta;SIGNAL= {{props.row.deltaSIGNAL}}<br>
+                &Delta;CONTRAST= {{props.row.deltaCONTRAST}}<br>
+              </div>
+
+              <div class="col text-left">
+                &Delta;d' (0.3 mm) = {{props.row.deltaD03}}<br>
+                &Delta;d' (4 mm) = {{props.row.deltaD4}}<br>
+              </div>
+
+            </div>
+            <div class="row q-mt-sm">
+
+                <div class="col text-left">
+                  &Delta;MTF<sub>50</sub>= {{props.row.deltaMTF50}}<br>
+                  &Delta;MTF<sub>20</sub>= {{props.row.deltaMTF20}}<br>
+                  &Delta;MTF<sub>10</sub>= {{props.row.deltaMTF10}}
+                </div>
+              <div class="col text-left">
+                  &Delta; mAs = {{props.row.deltaMAS}}<br>
+                  &Delta; EI = {{props.row.deltaEI}}<br>
+                  &Delta; DI = {{props.row.deltaDI}}<br>
+
+                </div>
+            </div>
+          </q-td>
+          <q-td auto-width colspan="2">
+             <div class="text-subtitle2 text-center">Comments</div>
+            <div class="col">
+              <q-input dark
+                 v-model="textComments"
+                  filled
+                  autogrow
+                />
+              <div class="row justify-between q-mt-lg">
+                <q-btn color="warning" icon-right="mail" size="1em" label="Edit" />
+                <q-btn color="secondary" icon-right="mail" size="1em" label="Send" />
+              </div>
+
+
+            </div>
           </q-td>
 
         </q-tr>
@@ -145,6 +192,8 @@ const props = defineProps( {
     apiData: {},
 
   })
+
+const textComments = ref('')
 const tabledata = ref([])
 
 const getImageSrcFromRow = (row)=>{
