@@ -52,6 +52,20 @@ const getEsitiCQ_MammoByImpianto = (request,response)=>{
         })
 }
 
+const updateComments = (request,response)=>{
+    const id = parseInt(request.params.id)
+    const {comments} = request.body
+    const query = "UPDATE public.\"dailyQC_dailyqc\"\n" +
+        "SET comments=$1 WHERE id=$2"
+    pool.query(
+        query,[comments,id],
+        (error, results)=>{
+            if (error){throw error}
+            response.status(200).send(`qc modified with ID: $(id)`)
+        }
+    )
+}
+
 const getMammografi = (request,response)=>{
     const query = 'SELECT imp.id, imp.marca, imp.modello,imp.photo, ospedale.name as nome_ospedale ,sala.name as nome_sala, MAX(cq.data) as data_ultimo_cq\n' +
         '\tFROM public.impianti_impiantosala impSala, public.ospedali_ospedale ospedale ,public.ospedali_sala sala,\n' +
@@ -74,6 +88,7 @@ const getMammografi = (request,response)=>{
 module.exports = {
     getDIYresults,
     getEsitiCQ_MammoByImpianto,
-    getMammografi
+    getMammografi,
+    updateComments
 }
 

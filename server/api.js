@@ -51,5 +51,7 @@ app.get('/esitoMammo/:id/:anno?',db.getEsitiCQ_MammoByImpianto)
 
 app.get('/mammografi',db.getMammografi)
 
+app.put('/updateQC/:id',db.updateComments)
+
 
 
