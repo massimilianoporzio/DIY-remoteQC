@@ -120,11 +120,11 @@
           </q-td>
           <q-td auto-width colspan="2">
              <div class="text-subtitle2 text-center">Comments</div>
-            <div class="col">
+
               <q-input dark
-                 v-model="textComments"
+                 v-model="props.row.comments"
                   filled
-                  autogrow
+                  :autogrow="props.expand"
                 />
               <div class="row justify-between q-mt-lg">
                 <q-btn color="warning" icon-right="mail" size="1em" label="Edit" />
@@ -132,7 +132,7 @@
               </div>
 
 
-            </div>
+
           </q-td>
 
         </q-tr>
