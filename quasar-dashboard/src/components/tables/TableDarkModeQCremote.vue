@@ -127,7 +127,7 @@
                   :autogrow="props.expand"
                 />
               <div class="row justify-between q-mt-lg">
-                <q-btn color="warning" icon-right="mail" size="1em" label="Edit" />
+                <q-btn color="warning" icon-right="mail" size="1em" label="Edit" :disable="!hasComments(props.row)" />
                 <q-btn color="secondary" icon-right="mail" size="1em" label="Send" />
               </div>
 
@@ -195,6 +195,10 @@ const props = defineProps( {
 
 const textComments = ref('')
 const tabledata = ref([])
+
+const hasComments = (row)=>{
+  return row.comments ? true : false
+}
 
 const getImageSrcFromRow = (row)=>{
   return 'data:image/jpeg;base64,'+row.signal_image
