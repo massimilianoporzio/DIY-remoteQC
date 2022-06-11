@@ -19,7 +19,7 @@
 
           <q-tab-panel name="charts" class="text-white">
             <q-scroll-area dark style="height: 100%">
-                <div class="row q-col-gutter-sm q-py-sm justify-center text-h6"  v-if="!emptyData">
+              <div class="row q-col-gutter-sm q-py-sm justify-center text-h6"  v-if="!emptyData">
                     Detectability charts
                 </div>
             <div class="row q-col-gutter-sm q-px-sm q-py-sm ">
@@ -33,7 +33,7 @@
             </div>
             <div class="row q-col-gutter-sm q-px-sm q-py-sm justify-center text-h6">
             Spatial Resolution (MTF) charts
-          </div>
+            </div>
             <div class="row q-col-gutter-sm q-px-sm q-py-sm ">
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
               <MTF50 v-if="loaded" :api-data="dbData"/>
@@ -45,6 +45,21 @@
                   <MTF10 v-if="loaded" :api-data="dbData"/>
               </div>
             </div>
+              <div class="row q-col-gutter-sm q-px-sm q-py-sm justify-center text-h6">
+                  Signal related charts
+              </div>
+              <div class="row q-col-gutter-sm q-px-sm q-py-sm ">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                  <PV v-if="loaded" :api-data="dbData"/>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                  <SNR v-if="loaded" :api-data="dbData"/>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                  <SDNR v-if="loaded" :api-data="dbData"/>
+                </div>
+              </div>
+
             </q-scroll-area>
 
           </q-tab-panel>
@@ -80,6 +95,9 @@ export default defineComponent({
     MTF50: defineAsyncComponent(()=>import('components/charts/highcharts/MTF/MTF50_highchart')),
     MTF20: defineAsyncComponent(()=>import('components/charts/highcharts/MTF/MTF20_highchart')),
     MTF10: defineAsyncComponent(()=>import('components/charts/highcharts/MTF/MTF10_highchart')),
+    PV: defineAsyncComponent(()=>import('components/charts/highcharts/signal/PV_highchart')),
+    SNR: defineAsyncComponent(()=>import('components/charts/highcharts/signal/SNR_highchart')),
+    SDNR: defineAsyncComponent(()=>import('components/charts/highcharts/signal/SDNR_highchart')),
     TableDarkMode: defineAsyncComponent(() => import('components/tables/TableDarkModeQCremote')),
   },
 
