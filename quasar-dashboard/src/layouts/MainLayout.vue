@@ -44,31 +44,31 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-      class="bg-primary text-white"
-    >
-      <q-list>
-        <q-item to="/" active-class="q-item-no-link-highlighting">
-          <q-item-section avatar>
-            <q-icon name="dashboard"/>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Mammografi</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item to="/Charts" active-class="q-item-no-link-highlighting">
-          <q-item-section avatar>
-            <q-icon name="insert_chart"/>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>DIY ECMP 2022</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-drawer>
+<!--    <q-drawer-->
+<!--      v-model="leftDrawerOpen"-->
+<!--      show-if-above-->
+<!--      bordered-->
+<!--      class="bg-primary text-white"-->
+<!--    >-->
+<!--      <q-list>-->
+<!--        <q-item to="/" active-class="q-item-no-link-highlighting">-->
+<!--          <q-item-section avatar>-->
+<!--            <q-icon name="dashboard"/>-->
+<!--          </q-item-section>-->
+<!--          <q-item-section>-->
+<!--            <q-item-label>Mammografi</q-item-label>-->
+<!--          </q-item-section>-->
+<!--        </q-item>-->
+<!--        <q-item to="/Charts" active-class="q-item-no-link-highlighting">-->
+<!--          <q-item-section avatar>-->
+<!--            <q-icon name="insert_chart"/>-->
+<!--          </q-item-section>-->
+<!--          <q-item-section>-->
+<!--            <q-item-label>DIY ECMP 2022</q-item-label>-->
+<!--          </q-item-section>-->
+<!--        </q-item>-->
+<!--      </q-list>-->
+<!--    </q-drawer>-->
 
     <q-footer elevated>
         <q-toolbar>
