@@ -59,7 +59,20 @@
                   <SDNR v-if="loaded" :api-data="dbData"/>
                 </div>
               </div>
-
+                <div class="row q-col-gutter-sm q-px-sm q-py-sm justify-center text-h6">
+                  Exposure related charts
+              </div>
+              <div class="row q-col-gutter-sm q-px-sm q-py-sm ">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                  <EI v-if="loaded" :api-data="dbData"/>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                  <DI v-if="loaded" :api-data="dbData"/>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                  <MAS v-if="loaded" :api-data="dbData"/>
+                </div>
+              </div>
             </q-scroll-area>
 
           </q-tab-panel>
@@ -98,6 +111,9 @@ export default defineComponent({
     PV: defineAsyncComponent(()=>import('components/charts/highcharts/signal/PV_highchart')),
     SNR: defineAsyncComponent(()=>import('components/charts/highcharts/signal/SNR_highchart')),
     SDNR: defineAsyncComponent(()=>import('components/charts/highcharts/signal/SDNR_highchart')),
+    EI: defineAsyncComponent(()=>import('components/charts/highcharts/exposure/EI_highchart')),
+    DI: defineAsyncComponent(()=>import('components/charts/highcharts/exposure/DI_highchart')),
+    MAS: defineAsyncComponent(()=>import('components/charts/highcharts/exposure/MAS_highchart')),
     TableDarkMode: defineAsyncComponent(() => import('components/tables/TableDarkModeQCremote')),
   },
 
