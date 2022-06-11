@@ -8,7 +8,6 @@
         class="bg-primary text-white shadow-2"
         :breakpoint="0">
           <q-tab name="overview" class="text-capitalize" >Overview</q-tab>
-          <q-tab name="values" class="text-capitalize">Values</q-tab>
           <q-tab name="charts" class="text-capitalize">Charts</q-tab>
         </q-tabs>
       <div class="bg-amber col" >
@@ -17,13 +16,20 @@
           <q-tab-panel name="overview" >
               <table-dark-mode :api-data="dbData" v-if="loaded"/>
           </q-tab-panel>
-          <q-tab-panel name="values" class="text-white">
-            <div class="text-h6">Values</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </q-tab-panel>
+
           <q-tab-panel name="charts" class="text-white">
-            <div class="text-h6">Alarms</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          <div class="row q-col-gutter-sm q-py-sm justify-center text-h6"  v-if="!emptyData">
+            Detectability charts
+          </div>
+            <div class="row q-col-gutter-sm q-py-sm "  v-if="!emptyData">
+
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" >
+                    <D03 v-if="loaded" :api-data="dbData" />
+                </div>
+              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" >
+                    <D4 v-if="loaded" :api-data="dbData" />
+                </div>
+            </div>
           </q-tab-panel>
 
 
@@ -32,16 +38,6 @@
 
       </div>
 
-
-<!--      <div class="col bg-primary q-mt-sm text-white" v-if="tab==='overview'"-->
-<!--      style="max-height: 250px" >-->
-<!--        <div v-if="selectedRow" class="q-pt-sm q-pl-sm">-->
-<!--          {{selectedRow}}-->
-<!--        </div>-->
-<!--        <div v-else class="q-pt-sm q-pl-sm">-->
-<!--          No row selected-->
-<!--        </div>-->
-<!--      </div>-->
     </div>
   </q-page>
 
@@ -63,6 +59,7 @@ export default defineComponent({
     AreaChart: defineAsyncComponent(() => import('components/charts/AreaChart')),
     GuageChart: defineAsyncComponent(() => import('components/charts/GuageChart')),
     D03: defineAsyncComponent(()=>import('components/charts/highcharts/D03_highchart')),
+    D4: defineAsyncComponent(()=> import('components/charts/highcharts/D4_highchart')),
     TableDarkMode: defineAsyncComponent(() => import('components/tables/TableDarkModeQCremote')),
   },
 

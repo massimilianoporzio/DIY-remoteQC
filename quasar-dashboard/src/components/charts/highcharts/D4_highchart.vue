@@ -1,5 +1,5 @@
 <template>
-<!-- <h1>HIGHCHART STOCK D' 0.3 mm</h1>-->
+<!-- <h1>HIGHCHART STOCK D' 4 mm</h1>-->
 
   <highcharts :constructor-type="'stockChart'" :options="chartOptions" />
 </template>
@@ -25,7 +25,7 @@ const chartOptions = reactive({
 
   },
   title: {
-    text: 'd\' 0.3 mm',
+    text: 'd\' 4 mm',
     style: {
       fontSize: 24,
       fontFamily: 'Georgia'
@@ -33,7 +33,7 @@ const chartOptions = reactive({
   },
   series: [
     {
-      name: 'd03',
+      name: 'd4',
       data: chartData.data,
       lineWidth: 5
 
@@ -46,25 +46,26 @@ const chartOptions = reactive({
     gridZIndex: -1,
     opposite: false,
     min: 0,
-    max: 10,
+    max: 200,
     plotLines:[
       {
       value: 0.5,
       color: 'lime',
+      zIndex: 4,
       // dashStyle: 'shortdash',
       width: 2.2,
-        zIndex: 4,
       label: {
               text: 'baseline',
               align: 'left',
               style: {
-                   color: "white"
+                   color: "white",
+
                   }
              }
       },
       {
         value: 1,
-        color: '#DB2808',
+        color: '#C10015',
         dashStyle: 'shortdash',
         width: 2,
         label: {
@@ -103,7 +104,8 @@ onMounted(()=>{
 
   console.log("MOUNTED HIGHCHARTS D03")
   console.log("dataset data: ",props.apiData)
-  const data = props['apiData'].map(entry => [new Date(entry.date).setHours(1,0,0,0,),entry.D03? Number(entry.D03):null])
+  const data = props['apiData'].map(entry => [new Date(entry.date).setHours(1,0,0,0,),
+                                entry.D4? Number(entry.D4):null])
   console.log("date: ",data)
   chartData.data = data
   chartOptions.series[0].data=chartData.data
@@ -114,25 +116,25 @@ onMounted(()=>{
     const sortedBaselines = baselines.sort((a,b)=>{
          return new Date(b.date) - new Date(a.date)
        })
-  const baselineD03 = baselines.length ?  Number(sortedBaselines[0].D03) : 0
-  const d03Data =  props['apiData'].map(entry => Number(entry.D03))
+  const baselineD4 = baselines.length ?  Number(sortedBaselines[0].D4) : 0
+  const d4Data =  props['apiData'].map(entry => Number(entry.D4))
 
-  const yMax  =Math.max(...d03Data)
-  console.log(yMax)
-  const yMin  =Math.min(...d03Data)
+  const yMax  =Math.max(...d4Data)
+  console.log('il massimo ',yMax)
+  const yMin  =Math.min(...d4Data)
 
-  const upper = baselines ? baselineD03*1.2 : 0
+  const upper = baselines ? baselineD4*1.2 : 0
 
-  const lower = baselines ? baselineD03*0.8 : 0
+  const lower = baselines ? baselineD4*0.8 : 0
 
-  const suggestedMax = yMax > upper ? yMax : upper + 1
+  const suggestedMax = yMax > upper ? yMax : upper + 20
 
-  const suggestedMin = yMin < lower ? yMin : lower - 2
+  const suggestedMin = yMin < lower ? yMin : lower -30
 
   chartOptions.yAxis.min = suggestedMin
   chartOptions.yAxis.max = suggestedMax
 
-  chartOptions.yAxis.plotLines[0].value = baselineD03
+  chartOptions.yAxis.plotLines[0].value = baselineD4
 
   chartOptions.yAxis.plotLines[1].value = lower
   chartOptions.yAxis.plotLines[2].value = upper

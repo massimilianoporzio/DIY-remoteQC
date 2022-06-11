@@ -14,8 +14,8 @@ export default boot(async ( { app }) => {
   Stock(Highcharts)
   exportingInit(Highcharts)
   exportingDataInit(Highcharts)
-  // darkUnica(Highcharts);
+  //darkUnica(Highcharts);
   // darkGreen(Highcharts)
-  // highContrastDark(Highcharts)
+  highContrastDark(Highcharts)
   app.use(HighchartsVue)
 })

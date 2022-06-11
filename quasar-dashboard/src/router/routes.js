@@ -3,7 +3,7 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      {path: '', component: () => import('pages/Mammografi.vue')},
+      {path: '', component: () => import('pages/Charts2.vue')},
        {path: '/Dashboard2', component: () => import('pages/Dashboard2.vue')},
       {path: '/Profile', component: () => import('pages/UserProfile.vue')},
       {path: '/Map', component: () => import('pages/Map.vue')},
@@ -16,7 +16,7 @@ const routes = [
       {path: '/Checkout', component: () => import('pages/Checkout.vue')},
       {path: '/Ecommerce', component: () => import('pages/Mammografi.vue')},
       {path: '/Pagination', component: () => import('pages/Pagination.vue')},
-      {path: '/Charts', component: () => import('pages/Charts2.vue')},
+      {path: '/Charts', component: () => import('pages/Charts.vue')},
       {path: '/Calendar', component: () => import('pages/Calendar.vue')},
       {path: '/Directory', component: () => import('pages/Directory.vue')},
       {path: '/Footer', component: () => import('pages/Footer.vue')},
