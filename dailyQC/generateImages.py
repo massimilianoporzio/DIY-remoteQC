@@ -20,7 +20,7 @@ UAS_CHOICES = [36000,36100,36200,36300,36400,36500,36600,36700,36800,36900]
 
 
 def main():
-    for i in range(0, 100):
+    for i in range(0, 1):
         ds = pydicom.dcmread(sys.argv[1])
         image = ds.pixel_array
 
@@ -50,7 +50,7 @@ def main():
         #modify PatientName
         patient_name.value = 'TEST_QC'
 
-        startDate = date(2022,3,1) # march, 1st
+        startDate = date(2022,11,6) # march, 1st
 
         newDate = startDate + timedelta(days=i)
         newDate = DA(newDate)
@@ -67,7 +67,7 @@ def main():
         study_date.value = newDate
         image_date.value = newDate
 
-        ds.save_as('out'+str(i)+'.dcm')
+        ds.save_as('outTEST'+str(i)+'.dcm')
 
 
 if __name__ == "__main__":
