@@ -119,16 +119,21 @@
             </div>
           </q-td>
           <q-td auto-width colspan="2">
-             <div class="text-subtitle2 text-center">Comments</div>
+            <q-inner-loading :showing="visibile">
+              <q-spinner-hourglass  color="primary" size="7em" />
+            </q-inner-loading>
 
-              <q-input dark
+            <div class="text-subtitle2 text-center">Comments</div>
+
+              <q-input dark v-show="showSimulatedReturnData"
                  v-model="props.row.comments"
                   filled
                   :autogrow="props.expand"
                 />
-              <div class="row justify-between q-mt-lg">
-                <q-btn color="warning" icon-right="mail" size="1em" label="Edit" :disable="!hasComments(props.row)" />
-                <q-btn color="secondary" icon-right="mail" size="1em" label="Send" />
+              <div class="row justify-center q-mt-lg">
+
+                <q-btn color="teal-7" icon-right="send" size="1em" label="Send"
+                @click="sendComments(props.row)"/>
               </div>
 
 
@@ -188,16 +193,54 @@
 <script setup>
 import { format, parseJSON ,fromUnixTime , parse, formatRelative, subDays } from 'date-fns'
 import {ref, defineProps, onMounted} from 'vue'
+import axios from "axios"
+
+const visibile = ref(false)
+const showSimulatedReturnData = ref(false)
+
+const sendComments =  async (row)=>{
+  visibile.value = true
+
+  const id = row.id
+  const commentsToWrite = row.comments
+  try{
+      visibile.value = true
+      showSimulatedReturnData.value = false
+      axios.put('http://localhost:3000/updateQC/' + id,
+        {
+          comments: commentsToWrite
+        })
+
+    setTimeout(() => {
+          visibile.value = false
+          showSimulatedReturnData.value = true
+        }, 2000)
+  }catch (e){
+    console.log(e)
+  }
+
+  console.log("WRITE TO DB comments: ", commentsToWrite, " to row ", id)
+}
+
 const props = defineProps( {
     apiData: {},
 
   })
-
+const editComments=(row)=>{
+  console.log("cliked row: ",row.id)
+}
 const textComments = ref('')
 const tabledata = ref([])
 
-const hasComments = (row)=>{
-  return row.comments ? true : false
+const hasComments = (obj)=>{
+  // console.log("HAS COMMENTS?: ",obj.comments)
+
+  if(obj.comments){
+    return true
+  }else{
+    return false
+  }
+
 }
 
 const getImageSrcFromRow = (row)=>{
@@ -290,7 +333,12 @@ onMounted(()=>{
   console.log("MOUNTED TABLE DARK")
   tabledata.value = props.apiData.map(obj => ({ ...obj,
     esito: getOverallEsito(obj),
-    esitoSDNR: getEsito(obj.esitoSDNR)}))
+    esitoSDNR: getEsito(obj.esitoSDNR),
+    edited: false,
+    disabled: hasComments(obj)
+  })
+
+  )
 
   console.log("tableData: ",tabledata.value)
 })
