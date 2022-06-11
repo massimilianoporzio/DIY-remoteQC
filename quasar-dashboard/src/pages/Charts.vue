@@ -66,7 +66,7 @@ export default defineComponent({
     BarChart: defineAsyncComponent(() => import('components/charts/BarChart')),
     AreaChart: defineAsyncComponent(() => import('components/charts/AreaChart')),
     GuageChart: defineAsyncComponent(() => import('components/charts/GuageChart')),
-    D03: defineAsyncComponent(()=>import('components/charts/highcharts/D03_highchart'))
+    D03: defineAsyncComponent(()=>import('components/charts/highcharts/detect/D03_highchart'))
   },
   data() {
     return {
