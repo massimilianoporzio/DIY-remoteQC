@@ -9,7 +9,7 @@
 <!--    <q-separator color="white" class="q-mt-sm"/>-->
     <q-card-section class="q-pa-none" id="cardTable">
       <q-table virtual-scroll title="QC Results"
-       dark :rows="apiData" row-key="id"   :rows-per-page-options="[5,10,15]"
+       dark :rows="tabledata" row-key="id"   :rows-per-page-options="[5,10,15]"
                :pagination="{'rowsPerPage':10}"
       :visible-columns="['date','datetimeJava','kVp','mAs' ,'esito','esitoSIGNAL' ,'esitoSNR','esitoSDNR','esitoMTF50',
                           'esitoD03','esitoD4',
@@ -18,7 +18,8 @@
          <template v-slot:body="props">
         <q-tr  :props="props">
           <q-td auto-width>
-            <q-btn dense flat icon="add" @click="props.expand = !props.expand">
+            <q-btn dense flat icon="add"
+                   @click="props.expand = !props.expand">
 
             </q-btn>
 
@@ -126,8 +127,8 @@
             <div class="text-subtitle2 text-center">Comments</div>
 
               <q-input dark v-show="showSimulatedReturnData"
-                 v-model="props.row.comments"
-                  filled
+                 v-model="props.row.comments" @update:model-value="commentsChanged"
+                  filled clearable
                   :autogrow="props.expand"
                 />
               <div class="row justify-center q-mt-lg">
@@ -192,17 +193,26 @@
 
 <script setup>
 import { format, parseJSON ,fromUnixTime , parse, formatRelative, subDays } from 'date-fns'
-import {ref, defineProps, onMounted} from 'vue'
+import {ref, defineProps, onMounted, reactive} from 'vue'
 import axios from "axios"
 
+const commentsChanged = (row)=>{
+  console.log("CHANGED!")
+  if (row.comments!= row.originalComments){
+    // row.sendEnabled = true
+    tabledata[row.id].sendEnabled = true
+  }
+}
 const visibile = ref(false)
-const showSimulatedReturnData = ref(false)
+const showSimulatedReturnData = ref(true)
 
 const sendComments =  async (row)=>{
   visibile.value = true
 
+
   const id = row.id
   const commentsToWrite = row.comments
+
   try{
       visibile.value = true
       showSimulatedReturnData.value = false
@@ -210,7 +220,7 @@ const sendComments =  async (row)=>{
         {
           comments: commentsToWrite
         })
-
+      row.originalComments=commentsToWrite
     setTimeout(() => {
           visibile.value = false
           showSimulatedReturnData.value = true
@@ -219,11 +229,12 @@ const sendComments =  async (row)=>{
     console.log(e)
   }
 
+
   console.log("WRITE TO DB comments: ", commentsToWrite, " to row ", id)
 }
 
 const props = defineProps( {
-    apiData: {},
+    apiData: reactive({}),
 
   })
 const editComments=(row)=>{
@@ -329,13 +340,14 @@ const getColorFromEsito = (esito)=>{
   return esito === 'OK' ? '#21BA45' : esito === 'KO' ? '#C10015' : '#F2C037'
 }
 
+
 onMounted(()=>{
   console.log("MOUNTED TABLE DARK")
   tabledata.value = props.apiData.map(obj => ({ ...obj,
     esito: getOverallEsito(obj),
     esitoSDNR: getEsito(obj.esitoSDNR),
-    edited: false,
-    disabled: hasComments(obj)
+    originalComments: obj.comments,
+    sendEnabled: false
   })
 
   )
