@@ -20,9 +20,9 @@
           <q-tab-panel name="charts" class="text-white">
             <q-scroll-area dark style="height: 100%">
                 <div class="row q-col-gutter-sm q-py-sm justify-center text-h6"  v-if="!emptyData">
-            Detectability charts
-          </div>
-            <div class="row q-col-gutter-sm q-px-sm q-py-sm "  v-if="!emptyData">
+                    Detectability charts
+                </div>
+            <div class="row q-col-gutter-sm q-px-sm q-py-sm ">
 
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" >
                     <D03 v-if="loaded" :api-data="dbData" />
@@ -31,12 +31,20 @@
                     <D4 v-if="loaded" :api-data="dbData" />
                 </div>
             </div>
-            <div class="row q-col-gutter-sm q-px-sm q-py-sm justify-center text-h6"  v-if="!emptyData">
+            <div class="row q-col-gutter-sm q-px-sm q-py-sm justify-center text-h6">
             Spatial Resolution (MTF) charts
           </div>
+            <div class="row q-col-gutter-sm q-px-sm q-py-sm ">
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
               <MTF50 v-if="loaded" :api-data="dbData"/>
               </div>
+              <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                  <MTF20 v-if="loaded" :api-data="dbData"/>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                  <MTF10 v-if="loaded" :api-data="dbData"/>
+              </div>
+            </div>
             </q-scroll-area>
 
           </q-tab-panel>
@@ -70,6 +78,8 @@ export default defineComponent({
     D03: defineAsyncComponent(()=>import('components/charts/highcharts/detect/D03_highchart')),
     D4: defineAsyncComponent(()=> import('components/charts/highcharts/detect/D4_highchart')),
     MTF50: defineAsyncComponent(()=>import('components/charts/highcharts/MTF/MTF50_highchart')),
+    MTF20: defineAsyncComponent(()=>import('components/charts/highcharts/MTF/MTF20_highchart')),
+    MTF10: defineAsyncComponent(()=>import('components/charts/highcharts/MTF/MTF10_highchart')),
     TableDarkMode: defineAsyncComponent(() => import('components/tables/TableDarkModeQCremote')),
   },
 
